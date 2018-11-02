@@ -16,8 +16,11 @@ public class CommandManager implements CommandExecutor {
 
     private ArrayList<AbstractCommand> cmds = new ArrayList<>();
 
-    public CommandManager() {
-        this.cmds.add(new CreateKit());
+    protected ArrayList<String> kits;
+
+    public CommandManager(ArrayList<String> kits) {
+        this.kits = kits;
+        this.cmds.add(new CreateKit(this.kits));
     }
 
     @Override

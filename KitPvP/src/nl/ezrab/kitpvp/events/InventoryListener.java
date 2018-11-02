@@ -7,15 +7,22 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+
 public class InventoryListener implements Listener {
+
+    private ArrayList<String> kits;
+
+    public InventoryListener(ArrayList<String> kits) {
+        this.kits = kits;
+    }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
-//        TODO check if player is clicking the right inventory.
-//        if (e.getClickedInventory().getName().equals("")) {
-//
-//        }
+        if (!e.getClickedInventory().getName().equals(kits.toString())) {
+            return;
+        }
 
         e.setCancelled(true);
 

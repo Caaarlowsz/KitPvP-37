@@ -9,13 +9,17 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+
 public class KitCreator {
 
     private final Inventory inv;
     private String name;
     private Material material;
+    private ArrayList<String> kits;
 
-    public KitCreator(String name, Material material) {
+    public KitCreator(String name, Material material, ArrayList<String> kits) {
+        this.kits = kits;
         this.name = name;
         this.material = material;
 
@@ -36,6 +40,7 @@ public class KitCreator {
             p.sendMessage(KitPvP.plugin.prefix + ChatColor.RED + ChatColor.translateAlternateColorCodes('&', this.name) + ChatColor.RED + " already exists in the config.");
             return;
         }
+        kits.add(this.name);
         p.sendMessage(KitPvP.plugin.prefix + ChatColor.GREEN + "Received kit: " + ChatColor.translateAlternateColorCodes('&', this.name));
     }
 
