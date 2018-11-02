@@ -1,4 +1,4 @@
-package nl.ezrab.kitpvp.command.events;
+package nl.ezrab.kitpvp.events;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
