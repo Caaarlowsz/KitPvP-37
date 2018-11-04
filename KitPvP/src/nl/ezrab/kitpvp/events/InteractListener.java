@@ -1,5 +1,6 @@
 package nl.ezrab.kitpvp.events;
 
+import nl.ezrab.kitpvp.KitPvP;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -25,25 +26,19 @@ public class InteractListener implements Listener {
 
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
-        if (this.kits == null) {
-            return;
-        }
-
-        if (this.inv == null) {
+        if (this.kits == null || this.inv == null) {
             return;
         }
 
         Player p = e.getPlayer();
 
-        if (!(p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(ChatColor
-                .translateAlternateColorCodes('&', this.kits.toString()
-                        .replaceAll("[\\[\\]]", ""))))) {
+        if (!(p.getInventory().getItemInMainHand().getItemMeta().getDisplayName().equals(KitPvP.plugin.getConfig().getString(this.kits.toString())))) {
+            KitPvP.plugin.getLogger().info(KitPvP.plugin.getConfig().getString(this.kits.toString()));
             return;
         }
         if (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) {
             e.setCancelled(true);
             p.openInventory(this.inv);
-            p.sendMessage(this.kits.toString().replaceAll("[\\[\\]]", ""));
         }
     }
 }
