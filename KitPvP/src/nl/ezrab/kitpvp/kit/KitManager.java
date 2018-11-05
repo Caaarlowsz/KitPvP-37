@@ -29,8 +29,10 @@ public class KitManager {
     }
 
     public void createKit(Player p) {
-        if (!(this.kitPvP.getConfig().contains("kits." + this.name))) {
-            this.kitPvP.getConfig().set("kits." + this.name, this.material.toString());
+        if (!(this.kitPvP.getConfig().contains("kits." + ChatColor.stripColor(this.name)))) {
+            this.kitPvP.getConfig().set("kits." + ChatColor.stripColor(this.name), ChatColor.stripColor(this.name));
+            this.kitPvP.getConfig().set("kits." + ChatColor.stripColor(this.name) + ".name", this.name);
+            this.kitPvP.getConfig().set("kits." + ChatColor.stripColor(this.name) + ".items", this.material.toString());
             this.kitPvP.saveConfig();
         } else {
             p.sendMessage(this.kitPvP.prefix + ChatColor.RED + this.name + ChatColor.RED + " already exists in the config.");
@@ -42,20 +44,8 @@ public class KitManager {
         itemStack.setItemMeta(itemMeta);
         p.getInventory().addItem(itemStack);
 
-        inventories.add(this.inv);
+        this.inventories.add(this.inv);
 
-        p.openInventory(this.inv);
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public KitPvP getKitPvP() {
-        return kitPvP;
-    }
-
-    public Material getMaterial() {
-        return material;
+        p.openInventory(this.inventories.get(0));
     }
 }

@@ -23,7 +23,7 @@ public class CreateKit extends AbstractCommand {
     }
 
     @Override
-    public void onCommand(Player p, String[] args) throws IllegalArgumentException {
+    public void onCommand(Player p, String[] args) {
         if (args.length == 0) {
             p.sendMessage(this.kitPvP.prefix + ChatColor.RED + "Please specify a kit name.");
             return;

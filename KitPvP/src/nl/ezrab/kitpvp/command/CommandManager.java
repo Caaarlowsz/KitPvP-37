@@ -15,14 +15,14 @@ import java.util.Collections;
 
 public class CommandManager implements CommandExecutor {
 
+    protected ArrayList<Inventory> inventories = new ArrayList<>();
     private KitPvP kitPvP;
     private ArrayList<AbstractCommand> cmds = new ArrayList<>();
 
     public CommandManager(KitPvP kitPvP) {
         this.kitPvP = kitPvP;
 
-        ArrayList<Inventory> inventories = new ArrayList<>();
-        this.cmds.add(new CreateKit(this.kitPvP, inventories));
+        this.cmds.add(new CreateKit(this.kitPvP, this.inventories));
     }
 
     @Override

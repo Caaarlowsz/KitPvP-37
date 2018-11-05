@@ -14,9 +14,10 @@ public class KitPvP extends JavaPlugin {
 
     public final String prefix =
             ChatColor.DARK_AQUA + "[" + ChatColor.BLUE + ChatColor.BOLD + "KitPvP" + ChatColor.RESET + ChatColor.DARK_AQUA + "] " + ChatColor.RESET;
-    private ArrayList<Inventory> inv = new ArrayList<>();
+    private ArrayList<Inventory> inventories = new ArrayList<>();
 
     public void onEnable() {
+        this.saveDefaultConfig();
         this.getConfig().options().copyDefaults(true);
         this.saveConfig();
 
@@ -24,6 +25,6 @@ public class KitPvP extends JavaPlugin {
 
         PluginManager pluginManager = this.getServer().getPluginManager();
         pluginManager.registerEvents(new InventoryListener(this), this);
-        pluginManager.registerEvents(new InteractListener(this, this.inv), this);
+        pluginManager.registerEvents(new InteractListener(this, this.inventories), this);
     }
 }
