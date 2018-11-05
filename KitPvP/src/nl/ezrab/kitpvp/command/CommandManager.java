@@ -8,25 +8,27 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 public class CommandManager implements CommandExecutor {
 
+    private KitPvP kitPvP;
     private ArrayList<AbstractCommand> cmds = new ArrayList<>();
 
-    protected ArrayList<String> kits;
+    public CommandManager(KitPvP kitPvP) {
+        this.kitPvP = kitPvP;
 
-    public CommandManager(ArrayList<String> kits) {
-        this.kits = kits;
-        this.cmds.add(new CreateKit(this.kits));
+        ArrayList<Inventory> inventories = new ArrayList<>();
+        this.cmds.add(new CreateKit(this.kitPvP, inventories));
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!(sender instanceof Player)) {
-            sender.sendMessage(KitPvP.plugin.prefix + ChatColor.RED + "You have to be a player to use KitPvP.");
+            sender.sendMessage(this.kitPvP.prefix + ChatColor.RED + "You have to be a player to use KitPvP.");
             return true;
         }
         Player p = (Player) sender;
@@ -34,7 +36,7 @@ public class CommandManager implements CommandExecutor {
             if (args.length == 0) {
                 for (AbstractCommand gcmd : cmds) {
                     CommandInfo info = gcmd.getClass().getAnnotation(CommandInfo.class);
-                    p.sendMessage(KitPvP.plugin.prefix + ChatColor.AQUA + "/kitpvp (" + StringUtils.join(info.aliases(), ", ").trim() + ") " + ChatColor.DARK_AQUA + info.usage() + " - " + ChatColor.GREEN + info.description());
+                    p.sendMessage(this.kitPvP.prefix + ChatColor.AQUA + "/kitpvp (" + StringUtils.join(info.aliases(), ", ").trim() + ") " + ChatColor.DARK_AQUA + info.usage() + " - " + ChatColor.GREEN + info.description());
                 }
                 return true;
             }
@@ -51,12 +53,12 @@ public class CommandManager implements CommandExecutor {
             }
 
             if (wanted == null) {
-                p.sendMessage(KitPvP.plugin.prefix + ChatColor.RED + "Could not find command.");
+                p.sendMessage(this.kitPvP.prefix + ChatColor.RED + "Could not find command.");
                 return true;
             }
 
             if (wanted.getClass().getAnnotation(CommandInfo.class).op() && !p.isOp()) {
-                p.sendMessage(KitPvP.plugin.prefix + ChatColor.RED + "You don't have permission to use this command.");
+                p.sendMessage(this.kitPvP.prefix + ChatColor.RED + "You don't have permission to use this command.");
                 return true;
             }
 
