@@ -1,0 +1,9 @@
+name: KitPvP
+version: 1.0
+main: nl.ezrab.kitpvp.KitPvP
+author: Ezracoolie
+
+commands:
+  kitpvp:
+    description: The Main KitPvP Command.
+    usage: /<command>
